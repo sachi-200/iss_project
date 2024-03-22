@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page3.css') }}"/>
+    <title>Time Frame Tales</title>
+    <style>
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #5f5a5a;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box; 
+            outline: none; 
+        }
+        select {
+            font-size: 16px;
+            padding: 10px; 
+            height: 40px; 
+        }
+        input[type="text"]::placeholder {
+            color: #999; 
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('create_video') }}" enctype="multipart/form-data">
+        <div style="margin-top:50px"></div>
+        <h1 style="text-align: center;margin-top:2%;">You have successfully uploaded images! <br> Select background-audio for your video.</h1>
+        <div style="margin-top:100px"></div>
+        <div class="class1">
+            <div style="margin-left:40px"></div>
+            <label for="backgroundMusic">Background Music:</label>
+            <div style="margin-right:5px"></div>
+            <input class="class2" type="file" id="backgroundMusic" accept="audio/*" name="backgroundMusic" onchange="handleMusicUpload(event)" multiple>
+            <br>
+            <br>
+            <div style="margin-right:40px"></div>
+            <input type="text" name="durations" placeholder="Enter duration for each audio (in seconds)">
+            <div style="margin-right:30px"></div>
+            Duration per image (in seconds): <input type="number" id="imageDuration" value="3" name="imageDuration">
+            <br>
+            <div style="margin-right:40px"></div>
+            <label for="selected_transition">Image Transitions:</label>
+            <select id="selected_transition" name="selected_transition">
+                <option value="No Transition">No Transition</option>
+                <option value="fade">Fade</option>
+            </select>
+            <br>
+            <div style="margin-right:40px"></div>
+
+            <label for="videoQuality">Video Quality:</label>
+            <select id="videoQuality" name="videoQuality">
+                <option value="360p">360p</option>
+                <option value="480p">480p</option>
+                <option value="720p">720p</option>
+
+            </select>
+            <br>
+            <div style="margin-right:40px"></div>
+            <button class="button">Create video</button>
+            <div style="margin-right:40px"></div>
+            <div id="loadingMessage" style="display: none;">Creating video, please wait...</div>
+        </div>
+    </form>
+    <script>
+        function handleMusicUpload(event) {
+            const fileInput = document.getElementById('backgroundMusic');
+            const selectedFileName = fileInput.files[0].name;
+            console.log('Selected music file:', selectedFileName);
+        }
+
+        function createVideo() {
+            // Get selected background music, image duration, selected transition, and video quality
+            const backgroundMusic = document.getElementById('backgroundMusic').files[0];
+            const imageDuration = document.getElementById('imageDuration').value;
+            const selectedTransition = document.getElementById('selected_transition').value;
+            const videoQuality = document.getElementById('videoQuality').value;
+
+            // Display loading message
+            document.getElementById('loadingMessage').style.display = 'block';
+
+            // Use FormData to send the files and other data to the server
+            const formData = new FormData();
+            formData.append('backgroundMusic', backgroundMusic);
+            formData.append('imageDuration', imageDuration);
+            formData.append('selected_transition', selectedTransition);
+            formData.append('videoQuality', videoQuality);
+
+            // Send the request to create the video
+            fetch('/create_video', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+
+                // Handle the response from the server
+                if (data.status === 'success') {
+                    alert('Video created successfully!');
+                } else {
+                    alert('Error creating video: ' + data.message);
+                }
+            })
+            .catch(error => {
+                // Hide loading message and show error message
+                document.getElementById('loadingMessage').style.display = 'none';
+                alert('Error creating video: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

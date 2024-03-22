@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page2.css') }}">
+    <title>Drag and Drop Images</title>
+    <style>
+        .uploaded-image {
+            width: 650px; /* Adjust this value to your desired width */
+            height: 500px; /* Maintain aspect ratio */
+            margin: 5px; /* Adjust margin as needed */
+        }
+    </style>
+</head>
+<body>
+    <div style="justify-content: space-between;">
+        <div id="dropArea" class="drop-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+            <h1 style="font-family: cursive;">Drag & Drop Images Here</h1>
+            <input type="file" id="imageInput" name="images" accept=".png, .jpg, .jpeg, .gif" multiple style="display: none;" onchange="handleFileSelection(event)">
+        </div>
+        <button type="button" onclick="uploadImages()" style="font-size: 20px; box-shadow: 8px 6px 7px grey; text-shadow: 1px 2px 0px violet, 0px 1px 2px red; margin-left: 45%;">Upload photos</button>
+    </div>
+
+    <div id="fileNames" style="margin-top: 20px;">
+        <h2>Uploaded Images:</h2>
+        <ul id="fileNameList"></ul>
+    </div>
+
+    <script>
+        const uploadedFiles = [];
+
+        function handleFileSelection(event) {
+            const files = event.target.files;
+            handleFiles(files);
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            const formData = new FormData();
+            const imageContainer = document.getElementById('fileNames');
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    // Display image
+                    const imageElement = document.createElement('img');
+                    imageElement.src = event.target.result;
+                    imageElement.alt = file.name;
+                    imageElement.classList.add('uploaded-image');
+                    imageContainer.appendChild(imageElement);
+                };
+
+                reader.readAsDataURL(file);
+
+                // Add the file to formData
+                formData.append('images', file);
+                uploadedFiles.push({ name: file.name, type: file.type, file: file });
+            }
+
+            // Display the upload button
+            document.getElementById('uploadForm').style.display = 'block';
+        }
+
+        function uploadImages() {
+            const formData = new FormData();
+
+            const imageContainer = document.getElementById('fileNames');
+            const displayedImages = document.querySelectorAll('.uploaded-image');
+
+            displayedImages.forEach(image => {
+                // Find the corresponding file in uploadedFiles array
+                const file = uploadedFiles.find(f => f.name === image.alt);
+                if (file) {
+                    formData.append('images', file.file);
+                }
+            });
+
+            fetch('/upload_dragdrop', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    console.log('Non-redirect response:', response);
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading images:', error);
+
+                if (error.response && error.response.text) {
+                    console.error('Response:', error.response.text);
+                }
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+    </script>
+</body>
+</html>

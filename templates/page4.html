@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page4.css') }}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Preview</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .empty-box {
+            width: 80%;
+            max-width: 700px;
+            height: 500px;
+            border: 2px solid #ffc0cb; /* Pink themed border */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        video {
+            width: 100%; 
+            height: 100%;
+        }
+
+        .video-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .video-controls button {
+            background-color: #ffc0cb; /* Pink themed background */
+            border: none;
+            cursor: pointer;
+            font-size: 25px;
+            color: #fff; /* White text color */
+            margin: 0 15px; /* Adjust margin for spacing */
+            border-radius: 50%; /* Rounded shape */
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .video-controls button:hover {
+            background-color: #ff69b4; /* Lighter shade of pink on hover */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff; /* Blue themed background */
+            color: #fff; /* White text color */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #0056b3; /* Darker shade of blue on hover */
+        }
+
+        .download-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745; /* Green themed background */
+            color: #fff; /* White text color */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .download-button:hover {
+            background-color: #218838; /* Darker shade of green on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Preview your video here!</h1>
+    <div class="empty-box">
+        <video id="previewVideo" controls>
+            <source src="{{ url_for('static', filename='output_video.mp4') }}" type="video/mp4">  
+        </video>
+    </div>
+    <div class="video-controls">
+        <button onclick="rewindVideo()"><i class="fas fa-backward icon"></i></button>
+        <button onclick="forwardVideo()"><i class="fas fa-forward icon"></i></button>
+    </div>
+    <div class="button-container">
+        <button onclick="goToHomePage()">Go to Home Page</button>
+    </div>
+    <a href="{{ url_for('static', filename='output_video.mp4') }}" download="output_video.mp4" class="download-button">Download Video</a>
+    <script>
+        function rewindVideo() {
+            var video = document.getElementById('previewVideo');
+            video.currentTime -= 3; // Rewind by 3 seconds
+        }
+
+        function forwardVideo() {
+            var video = document.getElementById('previewVideo');
+            video.currentTime += 3; // Forward by 3 seconds
+        }
+
+        function goToHomePage() {
+            window.location.href = "home";
+        }
+    </script>
+</body>
+</html>

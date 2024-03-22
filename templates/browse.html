@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page2.css') }}">
+    <title>Browse Images</title>
+</head>
+<body>
+    <form id="uploadForm" method="POST" action="{{ url_for('browse') }}" enctype="multipart/form-data" style="margin-top: 2%;">
+        <input type="file" id="imageInput" name="images" accept=".png, .jpg, .jpeg, .gif" multiple>
+        <br>
+        <button type="submit" style="float: right;margin-right: 26%; font-size: 30px; box-shadow: 8px 6px 7px grey; text-shadow: 1px 2px 0px violet , 0px 1px 2px red; margin-top: 20px;">Upload photos</button>
+    </form>
+    <div id="fileNames" style="margin-top: 20px;">
+        <h2>Uploaded Image Names:</h2>
+        <ul id="fileNameList"></ul>
+    </div>
+
+<script>
+    document.getElementById('uploadForm').onsubmit = function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                console.log('Non-redirect response:', response);
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading images:', error);
+
+            if (error.response && error.response.text) {
+                console.error('Response:', error.response.text);
+            }
+        });
+    };
+</script>
+
+
+
+</body>
+</html>

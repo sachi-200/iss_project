@@ -1,0 +1,91 @@
+html{
+    background:linear-gradient(90deg,rgb(194, 71, 91),rgb(241, 192, 192));
+    font-family:'Playfair Display',sans-serif;
+}
+h1 {
+    animation: textAnimation 2s ease-in-out infinite; 
+    animation: scale 2s ease-in-out infinite alternate;
+
+}
+
+@keyframes textAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.class1{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 4px;
+    border:3px solid beige;
+    background-color: rgba(239, 164, 197, 0.571);
+    width:75%;
+    margin-left:150px;
+    padding:50px;
+    height:50%;
+    animation: moveAnimation 2s ease-in-out 1 ;
+   
+}
+.class2{
+    padding:5px;
+    width:400px;
+    border:3px solid beige;
+    border-radius: 4px;
+    background-color: rgb(176, 72, 89);
+    color:white;
+    font-family:'Playfair Display',sans-serif;
+}
+.class2:hover{
+    cursor:pointer;
+    border:3px solid rgb(0, 0, 0);
+    border-radius:4px;
+    background-color:pink;
+    color:black;
+
+}
+@keyframes moveAnimation {
+    0% ,100%{
+        margin-left: 0px;
+    }
+    100% {
+        margin-left: 150px;
+    }
+}
+
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.button{
+    padding:5px;
+    border:3px solid beige;
+    border-radius: 4px;
+    background-color: rgb(189, 75, 94);
+    color:white;
+    font-family:'Playfair Display',sans-serif;
+}
+.button:hover{
+    cursor:pointer;
+    border:3px solid rgb(0, 0, 0);
+    border-radius:4px;
+    background-color:pink;
+    color:black;
+
+}
+
+@keyframes scale {
+    to {
+        transform: scale(1.2);
+    }
+}

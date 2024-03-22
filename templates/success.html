@@ -1,0 +1,127 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Successful</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
+        <!-- You may include your stylesheets here -->
+        <!-- <style>
+            body {
+                background-image: url('upload_back.jpg');
+                /* margin-left: 36%; */
+                margin-top: 5%;
+                font-size: 30px;
+                font-family: 'Playfair Display', Helvetica, sans-serif;
+            }
+
+            h1 {
+                animation-duration: 3s;
+                animation-name: slideInLeft;
+            }
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-600px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            h2 {
+                animation-duration: 7s;
+                animation-name: slidein;
+            }
+            @keyframes slidein {
+                from {
+                    margin-left: 100%;
+                    width: 300%;
+                }
+
+                to {
+                    margin-left: 50%;
+                    width: 100%;
+                }
+            }
+
+            p {
+                font-family: cursive;
+                font-size: 40px;
+                /* opacity: 0; */
+                animation: fadeInAnimation 12s ease-in-out;
+            }
+            @keyframes fadeInAnimation {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            #welcomeMessage {
+                animation-duration: 10s;
+                animation-name: slideInLeft;
+            }
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-600px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            #home {
+                margin-left: 70%;
+                font-size: 30px;
+                margin-bottom: 5%;
+                border-radius: 10px;
+                box-shadow: 3px 3px 3px grey;color: white;
+                text-shadow: 2px 2px 2px darkblue,2px 2px 2px pink;
+                padding: 7px;background-color: rgb(255, 184, 194, 0.5);
+                animation: fadeInAnimation 12s ease-in-out;
+            }
+            @keyframes fadeInAnimation {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }   
+            
+        </style> -->
+
+    </head>
+    <body>
+        <div class="container">
+            <!-- <button onclick="window.location.href='home.html'" id="home"><i class="fa fa-home"></i> Go to Home page</button> -->
+            <a style="text-decoration: none;"  href="/home" id="home"><i class="fa fa-home"></i> Go to Homepage</a>
+            <h1 style="margin-left: 36%; margin-top: 40px;">Welcome to TimeFrameTales!!!</h1>
+            <h2 style="margin-left: 48%;">Login Successful!!</h2>
+            <h2 style="margin-left: 48%;" id="welcomeMessage">Welcome, {{ username }}</h2>
+            <!-- <p>Welcome to TimeFrameTales.</p> -->
+            <!-- <p id="bottom">You have successfully logged in.</p> -->
+            <p style="margin-left: 36%;">Turning pixels into poetry, your photos dance to the rhythm of<br> our videos. Elevate your memories with seamless elegance, only <br>at TimeFrameTales</p>
+            
+        </div>
+    </body>
+    <!-- <script>
+        var username = sessionStorage.getItem("username");
+        if(username) {
+            document.getElementById("welcomeMessage").innerText = "Welcome, "+ username + "!";
+        }
+        else {
+            alert("Username not found.");
+        }
+    </script> -->
+
+    </html>

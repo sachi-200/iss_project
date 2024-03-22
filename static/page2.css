@@ -1,0 +1,121 @@
+body {
+    background-image: url('page2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+#dropArea {
+    width: 75%;
+    margin: 5% auto;
+    height: 200px; /* Define the height of the drop area */
+    border: 2px dashed #000; /* Define the border style */
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 5px;
+    line-height: 100px; /* Center the text vertically */
+    font-size: 1.5rem;
+    background-color: rgb(255, 173, 187,0.5);
+    text-shadow: 2px white;
+    font-family: 'Playfair Display', Helvetica, sans-serif;
+    font-size: 40px;
+    color: rgb(249, 243, 243);
+    text-shadow: 1px 1px 2px rgb(6, 6, 6), 0 0 25px blue, 0 0 5px pink;
+    box-shadow: 10px 10px 5px rgb(237, 165, 176);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+#dropArea.hover {
+    border-color: #000; /* Change border color when hovering */
+    animation: pulseBorder 0.5s infinite alternate;
+}
+
+.image-container {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    width: 150px; /* Set a fixed width for the image container */
+    height: 150px; /* Set a fixed height for the image container */
+    overflow: hidden; /* Hide overflow content */
+    animation: fadeIn 1s ease-in-out;
+}
+
+.image-container img {
+    width: 100%; /* Ensure the image takes up 100% of the container width */
+    height: 100%; /* Ensure the image takes up 100% of the container height */
+    object-fit: cover; /* Ensure the image covers the entire container while preserving aspect ratio */
+}
+
+#imageInput {
+    font-size: 30px;
+    float: left;
+    margin-left: 26%;
+    text-shadow: 1px 2px 0px violet , 0px 1px 2px red;
+    animation: slideInLeft 1s ease-in-out;
+    margin-top: 30px;
+}
+
+button {
+    /* Existing styles */
+    animation: slideInRight 1s ease-in-out; /* Add animation to slide in the button from the right */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseBorder {
+    0% {
+        border-color: #000;
+    }
+
+    100% {
+        border-color: #ff69b4; /* Change border color when hovering */
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.highlight {
+    background-color: rgba(255, 0, 0, 0.1);
+}

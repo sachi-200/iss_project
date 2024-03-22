@@ -1,0 +1,58 @@
+body {
+    font-family: 'Playfair Display', Helvetica, sans-serif;
+    /* background-color: aqua; */
+    background-image: url('upload_back.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* margin: 0; */
+    /* margin-left: 30%; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    font-size: 30px;
+    margin-top: 11%;
+    border: 2px solid black;
+    width: 38%;
+    border-radius: 15px; */
+    
+    /* text-align: center; */
+}
+
+#login-container ,#signup-container{
+    margin-left: 30%;
+    /* display: flex; */
+    /* justify-content:center; */
+    /* align-items:center; */
+    background-color: rgba(220, 147, 147, 0.872);
+    text-shadow: 0 0 30px rgb(255, 255, 255);
+    border:3px solid rgba(101, 47, 67, 0.525);
+    border-radius:8px;
+    /* align-items: center;
+    justify-content: center;
+    height: 50vh; */
+    padding-left:20px;
+    font-size: 30px;
+    margin-top: 2%;
+    width: 38%;
+    border-radius: 5px;  
+    margin-left:60px;  
+    position: absolute;
+} 
+
+#log {
+    margin-left: 9%;
+    font-size: 35px;
+    margin-top: 3%;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px grey;
+}
+
+#sign {
+    margin-left: 15%;
+    font-size: 35px;
+    margin-top: 3%;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px grey;
+}
+

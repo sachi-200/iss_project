@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View My Photos</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add your CSS styles here */
+        .photo {
+            display: inline-block;
+            margin: 10px;
+        }
+        .btn {
+            font-size: 35px;
+            color:black;
+            margin-top: 0;
+            margin-left:75%;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>My Photos</h1>
+    <!-- Button to go back to home page -->
+    <a href="{{ url_for('home') }}" class="btn"><i class="fas fa-home"></i> Go back to Home</a>
+    <div id="photo-gallery">
+        <!-- Images will be displayed here -->
+        {% for image in images %}
+            <div class="photo">
+                <img src="data:image/jpeg;base64,{{ image.storeimage }}" alt="Photo" width="550px" height="550px">
+            </div>
+        {% endfor %}
+    </div> 
+    
+</body>
+</html>

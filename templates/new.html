@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+  <style>  .button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid #000000; /* Border color */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #d68ac7; /* Background color */
+        color: #fff; /* Text color */
+    }
+    
+    /* Hover effect */
+    .button:hover {
+        background-color: #2980b9; /* Darker background color on hover */
+        border-color: #2980b9; /* Darker border color on hover */
+    }
+</style>    
+    <!-- Add your meta tags and styles here -->
+</head>
+<body>
+    <h1>My Photos</h1>
+    <form method="POST" action="{{ url_for('update_image_status') }}">
+        <div id="photo-gallery">
+            <!-- Images will be displayed here -->
+            {% for image in images %}
+                <div class="photo">
+                    <!-- <p>Image ID: {{ image.id }}</p> -->
+                    <input type="checkbox" class="image-checkbox" name="selected_images[]" value="{{ image.id }}" {% if image.selected %}checked{% endif %}>
+                    <img src="data:image/jpeg;base64,{{ image.image }}" alt="Photo" width="550px" height="550px">
+                </div>
+            {% endfor %} 
+        </div>
+        <input type="hidden" id="selected-images" name="selected_images" value="">
+        <button type="submit"onclick="updateSelectedImages()" class="button">Save Selected Images</button>
+    </form>
+    <script>
+        var selectedImages = [];
+        $(document).ready(function () {
+            
+
+            $('.image-checkbox').on('change', function () {
+                var imageId = $(this).val();
+
+                if ($(this).prop('checked')) {
+                    // Add to selected images if checked
+                    selectedImages.push(imageId);
+                } else {
+                    // Remove from selected images if unchecked
+                    selectedImages = selectedImages.filter(function (id) {
+                        return id !== imageId;
+                    });
+                }
+
+                // Log the image.id and selected images to the console (for debugging)
+                console.log('Image ID:', imageId);
+                console.log('Selected Images:', selectedImages);
+            });
+
+           
+        });
+        function updateSelectedImages() {
+                // Update the hidden input field with the selected images
+                $('#selected-images').val(selectedImages.join(','));
+
+                // Log the selected images to the console (for debugging)
+                console.log('Selected Images:', selectedImages);
+                $('form').submit();
+            }
+    </script>
+</body>
+</html>

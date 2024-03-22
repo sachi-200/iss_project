@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"/>
+        <title>TimeFrameTales</title>
+    </head>
+    <body>
+        <!-- <button type="button">Sign Up here</a> -->
+        <div class="container" id="login-container">
+            <h2>Login</h2>
+           
+                <form id="login-form" action="{{ url_for('login') }}" method="post">
+                        <label for="username">Username :</label>
+                        <br>
+                        <input type="text" id="username" name="username" size="30" style="font-size: 20px; border-radius: 12px;" required>
+                        <br>
+                        <label for="password">Password :</label>
+                        <br>
+                        <input type="password" id="password" name="password" size="30" style="font-size: 20px; border-radius: 12px;" required>
+                        <br><br>
+                        <label for=""><input type="checkbox" style="transform: scale(1.5); margin-bottom: 20px;">  Remember me</label>
+                        <br>
+                    <button type="submit" style="font-size: 30px; cursor: pointer;font-family:'Playfair Display'" >Login</button>
+                </form><br>
+                <a href="#">Forget Password??</a>
+                <p>Don't have an account?? <a href="#" onclick="redirectToSignup()">Sign Up here</a></p>
+        </div>
+        
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <!-- {% if alert %}
+        <script>
+            alert("Invalid username or password. Please try again.");
+        </script>
+        {% endif %} -->
+        <script>
+             const urlParams = new URLSearchParams(window.location.search);
+             const message = urlParams.get('message');
+
+        // Display appropriate alert based on the message parameter
+        if (message === 'success') {
+            alert('Login successful');
+        } else if (message === 'error') {
+            alert('Invalid username or password');
+        }
+
+        </script>
+
+    </body>
+</html>

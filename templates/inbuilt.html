@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page3.css') }}"/>
+    <title>Time Frame Tales</title>
+    <style>
+        /* Styling for the input element */
+        input[type="text"] {
+            width: 300px; /* Adjust the width as needed */
+            padding: 10px;
+            border: 1px solid #5f5a5a;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            outline: none; /* Remove default focus outline */
+        }
+        select {
+            font-size: 16px; /* Adjust font size as needed */
+            padding: 10px; /* Adjust padding as needed */
+            height: 40px; /* Adjust height as needed */
+        }
+        /* Placeholder styling */
+        input[type="text"]::placeholder {
+            color: #999; /* Adjust placeholder text color */
+        }      
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('create_video') }}" enctype="multipart/form-data">
+        <div style="margin-top:50px"></div>
+        <h1 style="text-align: center;margin-top:2%;">You have successfully uploaded images! 
+          <br> Select background-audio for your video.</h1>
+        <div style="margin-top:100px"></div>
+        <div class="class1">
+            <div style="margin-left:40px"></div>
+            <label for="backgroundMusic">Select background audio:</label>
+            <select id="backgroundMusic" name="backgroundMusic">
+                <!-- Options for inbuilt audio will be added dynamically using JavaScript -->
+            </select>
+            <div style="margin-right:5px"></div>
+            <br>
+            <br>
+            <div style="margin-right:40px"></div>
+            <input type="text" name="durations" placeholder="Enter duration for each audio (in seconds)">
+            <div style="margin-right:30px"></div>
+            Duration per image (in seconds): <input type="number" id="imageDuration" value="3" name="imageDuration">
+            <br>
+            <div style="margin-right:40px"></div>
+            <label for="selected_transition">Image Transitions:</label>
+            <select id="selected_transition" name="selected_transition">
+                <option value="No Transition">No Transition</option>
+                <option value="fade">Fade</option>
+            </select>
+            <br>
+            <div style="margin-right:40px"></div>
+            <button type="button" onclick="createVideo()" class="button">Create video</button>
+            <div style="margin-right:40px"></div>
+            <div id="loadingMessage" style="display: none;">Creating video, please wait...</div>
+        </div>
+    </form>
+    <script>
+        // Fetch audio names from Flask route
+        fetch('/get_audio_names')
+            .then(response => response.json())
+            .then(data => {
+                const audioSelect = document.getElementById('backgroundMusic');
+                data.audio_names.forEach(audio_name => {
+                    const option = document.createElement('option');
+                    option.textContent = audio_name;
+                    audioSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching audio names:', error));
+
+        function createVideo() {
+            // Get selected background music and image duration
+            const backgroundMusic = document.getElementById('backgroundMusic').value;
+            const imageDuration = document.getElementById('imageDuration').value;
+
+            // Display loading message
+            document.getElementById('loadingMessage').style.display = 'block';
+
+            // Use FormData to send the files to the server
+            const formData = new FormData();
+            formData.append('backgroundMusic', backgroundMusic);
+            formData.append('imageDuration', imageDuration);
+
+            // Send the request to create the video
+            fetch('/create_video', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+
+                // Handle the response from the server
+                if (data.status === 'success') {
+                    alert('Video created successfully!');
+                } else {
+                    alert('Error creating video: ' + data.message);
+                }
+            })
+            .catch(error => {
+                // Hide loading message and show error message
+                document.getElementById('loadingMessage').style.display = 'none';
+                alert('Error creating video: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"/>
+    <title>Signup</title>
+</head>
+<body>
+    
+    <div class="container" id="signup-container" style="display: block; margin-bottom: 10px; margin-top: 6%;">
+        <h1>Sign up</h1>
+        <form id="signup-form" action="{{ url_for('signup') }}" method="post" onsubmit="return validateForm()">
+            <label for="newUsername">Username :</label>
+            <br>
+            <input type="text" id="newUsername" name="newUsername" size="30" style="font-size: 20px; border-radius: 12px;" required>
+            <br>
+            <label for="Email">Email :</label>
+            <br>
+            <input type="email" id="Email" name="Email" size="30" style="font-size: 20px; border-radius: 12px;" required>
+            <br>
+            <label for="newPassword">Password :</label>
+            <br>
+            <input type="password" id="newPassword" name="newPassword" size="30" style="font-size: 20px; border-radius: 12px;" required>
+            <br>
+            <label for="confirmPassword">Confirm Password :</label>
+            <br>
+            <input type="password" id="confirmPassword" size="30" style="font-size: 20px; border-radius: 12px;" required>
+            <br>
+            <label for=""><input type="checkbox" style="transform: scale(1.5); margin-bottom: 20px;">  Remember me</label>
+            <br>
+            <button type="submit" style="font-size: 30px; cursor: pointer; font-family:'Playfair Display'">Sign Up</button>
+        </form>
+        <p>Already have an account?? <a href="#" onclick="redirectToLogin()">Login here</a></p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        function validateForm() {
+            var password = document.getElementById("newPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>

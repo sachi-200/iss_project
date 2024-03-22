@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='page2.css') }}">
+    <title>Upload Images</title>
+</head>
+<body>
+    <form id="uploadForm" method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" style="margin-top: 2%;">
+        <input type="file" id="imageInput" name="images" accept=".png, .jpg, .jpeg, .gif" multiple>
+        <br>
+        <button type="submit" style="float: right;margin-right: 26%; font-size: 30px; box-shadow: 8px 6px 7px grey; text-shadow: 1px 2px 0px violet , 0px 1px 2px red; margin-top: 20px;">Upload photos</button>
+    </form>
+    <h3 style="text-align:center; margin-top:5%; font-size: 30px;margin-bottom: 3%;text-shadow: 3px 3px 3px white;">OR</h3>
+    <div id="dropArea" class="drop-area">
+        <h1 style="font-family: cursive;">Drag & Drop Images Here</h1>
+    </div>
+    <div id="fileNames" style="margin-top: 20px;">
+        <h2>Uploaded Image Names:</h2>
+        <ul id="fileNameList"></ul>
+    </div>
+
+<!-- 
+<script>
+    const uploadedFiles = [];
+
+    document.getElementById('uploadForm').onsubmit = function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Append each file to FormData manually
+        uploadedFiles.forEach((file, index) => {
+            formData.append(`file${index + 1}`, file.file);
+        });
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Images uploaded successfully');
+            } else {
+                console.error('Error uploading images:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading images:', error);
+        });
+    };
+
+    function handleFiles(files) {
+        const fileNameList = document.getElementById('fileNameList');
+
+        for (const file of files) {
+            uploadedFiles.push({
+                name: file.name,
+                type: file.type,
+                file: file
+            });
+
+            const fileNameItem = document.createElement('li');
+            fileNameItem.textContent = file.name;
+            fileNameList.appendChild(fileNameItem);
+        }
+    }
+
+    const dropArea = document.getElementById('dropArea');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropArea.classList.remove('highlight');
+    }
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+        preventDefaults(e);
+    }
+</script> -->
+
+<script>
+    const uploadedFiles = [];
+
+    document.getElementById('uploadForm').onsubmit = function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Append each file to FormData manually
+        uploadedFiles.forEach((file, index) => {
+            formData.append(`file${index + 1}`, file.file);
+        });
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.success) {
+        //         console.log('Images uploaded successfully');
+        //     } else {
+        //         console.error('Error uploading images:', data.error);
+        //     }
+        // })
+        .then(response => {
+        // Check if the response status is a successful redirection (3xx status)
+        if (response.redirected) {
+            // If it's a redirect, navigate to the redirected URL
+            window.location.href = response.url;
+        } else {
+            // Handle other non-redirect responses if needed
+            console.log('Non-redirect response:', response);
+        }
+    })
+        .catch(error => {
+            console.error('Error uploading images:', error);
+
+            if(error.response && error.response.text) {
+                console.error('Response:',error.response.text)
+            }
+        });
+    };
+
+    function handleFiles(files) {
+        const fileNameList = document.getElementById('fileNameList');
+
+        for (const file of files) {
+            uploadedFiles.push({
+                name: file.name,
+                type: file.type,
+                file: file
+            });
+
+            const fileNameItem = document.createElement('li');
+            fileNameItem.textContent = file.name;
+            fileNameList.appendChild(fileNameItem);
+        }
+    }
+
+    const dropArea = document.getElementById('dropArea');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropArea.classList.remove('highlight');
+    }
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    // function handleDrop(e) {
+    //     const dt = e.dataTransfer;
+    //     const files = dt.files;
+    //     handleFiles(files);
+    //     preventDefaults(e);
+    // }
+    function handleDrop(e) {
+        e.preventDefault();
+    const dt = e.dataTransfer;
+    const files = dt.files;
+
+    // Append the dropped files to FormData for submission
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+    }
+
+    const imageContainer = document.getElementById('fileNames');
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Display image
+        const imageElement = document.createElement('img');
+        imageElement.src = URL.createObjectURL(file);
+        imageElement.alt = file.name;
+        imageElement.classList.add('uploaded-image'); 
+        imageContainer.appendChild(imageElement);
+
+        // Append the dropped files to FormData for submission
+        formData.append('images', file);
+    }
+
+    const displayedImages = document.querySelectorAll('.uploaded-image');
+    displayedImages.forEach(image => {
+        image.addEventListener('click', toggleImageVisibility);
+    });
+
+    // Submit the FormData for upload
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    // // .then(response => {
+    // //     // Check if the response status is a successful redirection (3xx status)
+    // //     if (response.redirected) {
+    // //         // If it's a redirect, navigate to the redirected URL
+    // //         window.location.href = response.url;
+    // //     } else {
+    // //         // Handle other non-redirect responses if needed
+    // //         console.log('Non-redirect response:', response);
+    // //     }
+    // })
+    .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Images uploaded successfully');
+            } else {
+                console.error('Error uploading images:', data.error);
+            }
+        })
+    .catch(error => {
+        console.error('Error uploading images:', error);
+
+        if (error.response && error.response.text) {
+            console.error('Response:', error.response.text);
+        }
+    });
+
+    // handleFiles(files);
+    // preventDefaults(e);
+    function toggleImageVisibility() {
+        this.style.display = (this.style.display === 'none' || !this.style.display) ? 'inline-block' : 'none';
+    }
+}   
+
+
+
+</script>
+
+
+</body>
+</html>

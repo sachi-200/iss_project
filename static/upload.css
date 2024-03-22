@@ -1,0 +1,105 @@
+/* html {
+    background-image: url('upload_back.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+.quote{
+    font-size:30px;
+    font-style:lucida;
+    margin-top: 10%;
+    color:rgb(13, 27, 69);
+    margin-left: 50%;
+}
+
+            body {
+                background-image: url('upload_back.jpg');
+                /* margin-left: 36%; */
+                background-repeat: no-repeat;
+                background-size: cover;
+                margin-top: 5%;
+                font-size: 30px;
+                font-family: 'Playfair Display', Helvetica, sans-serif;
+            }
+
+            h1 {
+                animation-duration: 3s;
+                animation-name: slideInLeft;
+            }
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-600px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            h2 {
+                animation-duration: 7s;
+                animation-name: slidein;
+            }
+            @keyframes slidein {
+                from {
+                    margin-left: 100%;
+                    width: 300%;
+                }
+
+                to {
+                    margin-left: 50%;
+                    width: 100%;
+                }
+            }
+
+            p {
+                font-family: cursive;
+                font-size: 40px;
+                /* opacity: 0; */
+                animation: fadeInAnimation 12s ease-in-out;
+            }
+            @keyframes fadeInAnimation {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            #welcomeMessage {
+                animation-duration: 10s;
+                animation-name: slideInLeft;
+            }
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-600px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            #home {
+                margin-left: 70%;
+                font-size: 30px;
+                margin-bottom: 5%;
+                border-radius: 10px;
+                box-shadow: 3px 3px 3px grey;color: white;
+                text-shadow: 2px 2px 2px darkblue,2px 2px 2px pink;
+                padding: 7px;background-color: rgb(255, 184, 194, 0.5);
+                animation: fadeInAnimation 12s ease-in-out;
+            }
+            @keyframes fadeInAnimation {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }   
+            
+       
